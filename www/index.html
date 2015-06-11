@@ -20,13 +20,20 @@
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
+    <script src="js/config.js"></script>
+
   </head>
   <body ng-app="starter">
-    <ion-nav-bar class="bar-positive">
+    <ion-nav-bar class="bar-positive" ng-controller="ConfigCtrl">
       <ion-nav-back-button class="button-clear">
-    <i class="ion-arrow-left-c"></i> Back
-  </ion-nav-back-button>
-</ion-nav-bar>
+        <i class="ion-arrow-left-c"></i> Back
+      </ion-nav-back-button>
+      <ion-nav-buttons side="right" >
+        <button class="button button-icon ion-ios-gear" ng-click="modal.show()">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+
   <ion-tabs class="tabs-positive">
     <ion-tab icon="ion-checkmark" ui-sref="todos">
       <ion-nav-view name="todos"></ion-nav-view>
@@ -46,6 +53,11 @@
         <span ng-class="{done: todo.done}">{{todo.title}}</span>
       </ion-item>
     </ion-list>
+    <div class="buttons">
+      <button class="button " ng-click="click()">Press
+      </button>
+    </div>
+
   </ion-content>
 </ion-view>
 </script>

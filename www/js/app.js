@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+angular.module('starter', ['ionic','config.service'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -31,16 +31,37 @@ angular.module('starter', ['ionic'])
     }
   }
 })
-.controller('TodosCtrl', function($scope,TodosService) {
+.controller('TodosCtrl', function($scope,TodosService,ConfigService) {
+  console.log("todos");
   $scope.todos = TodosService.todos
+
+  $scope.click = function() {
+    console.log(JSON.stringify(ConfigService.getConfig()));
+  }
 })
 .controller('TodoCtrl', function($scope, tdo, message) {
   $scope.todo = tdo
   console.log(message)
 })
+.controller("ConfigCtrl",function($scope,$ionicModal,ConfigService){
+  console.log("ConfigCtrl "+ JSON.stringify(ConfigService.getConfig()))
+  $scope.newConfig=ConfigService.getConfig()
+
+  $scope.save= function() {
+    console.log("Before Set "+JSON.stringify($scope.newConfig))
+    ConfigService.setConfig($scope.newConfig)
+    $scope.modal.hide();
+  }
+
+  $ionicModal.fromTemplateUrl('templates/modal-config.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+})
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/todos')
-
+  console.log("config")
   $stateProvider.state('todos', {
     abstract: true,
     url: '/todos',
